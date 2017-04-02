@@ -4,7 +4,7 @@ from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('sqlite:///millionaire.sqlite', echo=True)
+engine = create_engine('sqlite:///millionaire.sqlite')
 
 Base = declarative_base()
 
@@ -35,6 +35,8 @@ for line in f:
         else:
             current_line = current_line + " " + f.readline().strip()
             new_question = current_line[6:]
+    if current_line.find("*") > -1:
+        print(current_line)
     if current_line.find("Ans") > -1:
         # print(current_line[8:])
         questions.append(Question(question = new_question, answer = current_line[8:]))
