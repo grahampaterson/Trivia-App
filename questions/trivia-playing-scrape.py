@@ -46,17 +46,27 @@ def parse_questions(url):
 
             a = line.contents[1].string[4:]
 
+            a = a.replace("\n", "")
+            a = a.replace("\r", "")
+            a = a.replace("\r\n", "")
+
             all_questions.append({"q": q, "a": a})
 
     return all_questions
 
 sample = [{"q": "question", "a": "answer"}]
 
+
 # takes a list of dicts with keys "q" and "a" and writes them to file quiz.txt
-def write_file():
-    f = open("quiz.txt", "w")
-    for line in sample:
-        f.write(line["q"] + line["a"])
+def write_file(q_list, n):
+    filename = "quiz" + str(n) + ".txt"
+    f = open(filename, "w")
+    for line in q_list:
+        f.write(line["q"] + ": " + line["a"] + "\n")
     f.close
 
-# parse_questions(link[0].attrs['href'])
+# "main" function
+url_list = scrape_urls()
+for url in url_list:
+    counter = 0
+    write_file(parse_questions(url), counter)
