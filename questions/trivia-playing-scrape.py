@@ -29,28 +29,44 @@ def parse_questions(url):
 
     base = "http://www.triviaplaying.com/"
 
-    # get url for quiz and scrape p tags
+    # print current url for error handling
+    print(base + url)
+
+    # get page data from supplied url
     quiz = requests.get(base + url)
-    # quiz_content = quiz.content
+
+    # convert to parsable soup object
     quiz_soup = BeautifulSoup(quiz.content, 'html.parser')
-    trivia = quiz_soup.find_all("p")
+
+    # get all p tags with body tag
+    trivia = quiz_soup.body.find_all("p")
 
     # loop through paragraph tags finding questions and answers
     for line in trivia:
-        if len(line.contents) > 1:
-            q = line.contents[0].string
+        if len(line.contents) == 2:
+
+            # get answers from br tag otherwise skip
+            try:
+                a = line.br.get_text()
+            except AttributeError:
+                print("Error found no br tag")
+                continue
+
+            # Strip unecessary line breaks etc
+            a = a.replace("\n", "")
+            a = a.replace("\r", "")
+            a = a.replace("\r\n", "")
+
+            q = line.contents[0]
+
             # strip newline
             q = q.replace("\n", "")
             q = q.replace("\r", "")
             q = q.replace("\r\n", "")
 
-            a = line.contents[1].string[4:]
-
-            a = a.replace("\n", "")
-            a = a.replace("\r", "")
-            a = a.replace("\r\n", "")
-
             all_questions.append({"q": q, "a": a})
+            print(q)
+            print(a)
 
     return all_questions
 
@@ -66,7 +82,9 @@ def write_file(q_list, n):
     f.close
 
 # "main" function
-url_list = scrape_urls()
-for url in url_list:
-    counter = 0
-    write_file(parse_questions(url), counter)
+# url_list = scrape_urls()
+# for url in url_list:
+#     counter = 0
+#     write_file(parse_questions(url), counter)
+
+parse_questions(scrape_urls()[1])
