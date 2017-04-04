@@ -3,6 +3,8 @@ import os
 import sys
 from bs4 import BeautifulSoup
 import requests
+import time
+import random
 
 # get all the links to the different trivia pages
 # and return list of urls
@@ -49,7 +51,8 @@ def parse_questions(url):
             try:
                 a = line.br.get_text()
             except AttributeError:
-                print("Error found no br tag")
+                print("Error found no br tag in ", end="")
+                print(line)
                 continue
 
             # Strip unecessary line breaks etc
@@ -65,8 +68,6 @@ def parse_questions(url):
             q = q.replace("\r\n", "")
 
             all_questions.append({"q": q, "a": a})
-            print(q)
-            print(a)
 
     return all_questions
 
@@ -74,17 +75,30 @@ sample = [{"q": "question", "a": "answer"}]
 
 
 # takes a list of dicts with keys "q" and "a" and writes them to file quiz.txt
-def write_file(q_list, n):
-    filename = "quiz" + str(n) + ".txt"
-    f = open(filename, "w")
+def write_file(q_list, n, url):
+
+    # writes each quiz to new file
+    # filename = "triviaplaying/quiz" + str(n) + ".txt"
+    # f = open(filename, "w")
+
+    # writes every quiz to one file
+    filename = "triviaplaying.txt"
+    f = open(filename, "a")
+
+    f.write(url + "\n")
     for line in q_list:
-        f.write(line["q"] + ": " + line["a"] + "\n")
+        f.write("Q: " + line["q"] + "\n" + line["a"] + "\n")
+    f.write("\n")
     f.close
 
 # "main" function
-# url_list = scrape_urls()
-# for url in url_list:
-#     counter = 0
-#     write_file(parse_questions(url), counter)
-
-parse_questions(scrape_urls()[1])
+start_time = time.time()
+url_list = scrape_urls()
+counter = 0
+for url in url_list:
+    write_file(parse_questions(url), counter, url)
+    counter += 1
+    # if counter == 6:
+    #     break
+    time.sleep(random.randrange(5, 300))
+    print("time elapsed " + str(time.time() - start_time))
