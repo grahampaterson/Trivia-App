@@ -31,8 +31,8 @@ def parse_questions(url):
 
     base = "http://www.triviaplaying.com/"
 
-    # print current url for error handling
-    print(base + url)
+    # DEBUGGING print current url for error handling
+    # print(base + url)
 
     # get page data from supplied url
     quiz = requests.get(base + url)
@@ -94,11 +94,15 @@ def write_file(q_list, n, url):
 # "main" function
 start_time = time.time()
 url_list = scrape_urls()
+num_of_pages = len(url_list)
 counter = 0
-for url in url_list:
+for url in url_list[218:]:
+    print(str(num_of_pages - counter) + " pages left to scrape")
     write_file(parse_questions(url), counter, url)
     counter += 1
     # if counter == 6:
     #     break
-    time.sleep(random.randrange(5, 300))
-    print("time elapsed " + str(time.time() - start_time))
+    pause = random.randrange(5, 30)
+    print("Pausing for " + str(pause) + " seconds")
+    time.sleep(pause)
+    print("Total time elapsed " + str(time.time() - start_time))
