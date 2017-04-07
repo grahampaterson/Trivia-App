@@ -24,7 +24,9 @@ def scrape_urls():
     return urls
 
 
-# parse document for paragraph tags containing questions
+# tags a single URL as an argument and scrapes that url for all p tags contents
+# all p tags are then parsed for questions and answers and add as a dict to a
+# list and then returned
 def parse_questions(url):
 
     all_questions = []
@@ -45,33 +47,46 @@ def parse_questions(url):
 
     # loop through paragraph tags finding questions and answers
     for line in trivia:
-        if len(line.contents) == 2:
+        # if len(line.contents) == 2:
+        #
+        #     # get answers from br tag otherwise skip
+        #     try:
+        #         a = line.br.get_text()
+        #     except AttributeError:
+        #         print("Error found no br tag in ", end="")
+        #         print(line)
+        #         continue
+        #
+        #     # Strip unecessary line breaks etc
+        #     a = a.replace("\n", "")
+        #     a = a.replace("\r", "")
+        #     a = a.replace("\r\n", "")
+        #
+        #     q = line.contents[0]
+        #
+        #     # strip newline
+        #     q = q.replace("\n", "")
+        #     q = q.replace("\r", "")
+        #     q = q.replace("\r\n", "")
+        #
+        #     all_questions.append({"q": q, "a": a})
+        p_text = line.get_text()
+        if p_text.find("A:") == -1:
+            continue
+        else:
+            p_text = p_text.replace("\n", "")
+            p_text = p_text.replace("\r", "")
+            p_text = p_text.replace("\r\n", "")
+            answer = p_text.find("A:")
+            q = p_text[:answer]
+            a = p_text[answer:]
 
-            # get answers from br tag otherwise skip
-            try:
-                a = line.br.get_text()
-            except AttributeError:
-                print("Error found no br tag in ", end="")
-                print(line)
-                continue
+            print(q)
+            print(a)
 
-            # Strip unecessary line breaks etc
-            a = a.replace("\n", "")
-            a = a.replace("\r", "")
-            a = a.replace("\r\n", "")
-
-            q = line.contents[0]
-
-            # strip newline
-            q = q.replace("\n", "")
-            q = q.replace("\r", "")
-            q = q.replace("\r\n", "")
-
-            all_questions.append({"q": q, "a": a})
+        all_questions.append({"q": q, "a": a})
 
     return all_questions
-
-sample = [{"q": "question", "a": "answer"}]
 
 
 # takes a list of dicts with keys "q", "a" and "url" and writes them to file
@@ -89,17 +104,17 @@ def write_file(q_list, url):
     f.close
 
 # "main" function
-start_time = time.time()
-url_list = scrape_urls()
-num_of_pages = len(url_list)
-counter = 0
-for url in url_list[218:]:
-    print(str(num_of_pages - counter) + " pages left to scrape")
-    write_file(parse_questions(url), url)
-    counter += 1
-    # if counter == 6:
-    #     break
-    pause = random.randrange(5, 30)
-    print("Pausing for " + str(pause) + " seconds")
-    time.sleep(pause)
-    print("Total time elapsed " + str(time.time() - start_time))
+# start_time = time.time()
+# url_list = scrape_urls()
+# num_of_pages = len(url_list)
+# counter = 0
+# for url in url_list[218:]:
+#     print(str(num_of_pages - counter) + " pages left to scrape")
+#     write_file(parse_questions(url), url)
+#     counter += 1
+#     # if counter == 6:
+#     #     break
+#     pause = random.randrange(5, 30)
+#     print("Pausing for " + str(pause) + " seconds")
+#     time.sleep(pause)
+#     print("Total time elapsed " + str(time.time() - start_time))

@@ -43,7 +43,7 @@ def format_dates(inputfile, outputfile):
     outfile.close()
 
 
-# function to parse text file for qustion and answer combinations
+# function to parse text file for Question and answer combinations
 # questions are indicated by line starting with Q: and answers A:
 # urls contain the string .htm
 # returns a list of dicts containing above keys/values
