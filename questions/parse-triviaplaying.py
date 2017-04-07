@@ -3,7 +3,7 @@ import sqlite3
 # define parsing function
 def parse_text():
     # open file
-    f = open("trivia-test.txt", "r")
+    f = open("triviaconverted.txt", "r")
 
     url ="no url"
 
@@ -22,7 +22,7 @@ def parse_text():
             url = line
             continue
         else:
-            print("IGNORE " + line)
+            # print("IGNORE " + line)
             continue
 
         # add q, a and url to database function

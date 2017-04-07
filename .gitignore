@@ -2,3 +2,5 @@
 questions/triviaplaying.txt
 
 *.txt
+
+*.sqlite
