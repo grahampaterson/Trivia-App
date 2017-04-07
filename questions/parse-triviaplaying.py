@@ -1,9 +1,15 @@
 import sqlite3
 
-# define parsing function
-def parse_text():
+# function to parse text file for qustion and answer combinations
+# questions are indicated by line starting with Q: and answers A:
+# urls contain the string .htm
+# returns a list of dicts containing above keys/values
+def parse_text(infile):
+
+    parsed_info = []
+
     # open file
-    f = open("triviaconverted.txt", "r")
+    f = open(infile, "r")
 
     url ="no url"
 
@@ -26,24 +32,33 @@ def parse_text():
             continue
 
         # add q, a and url to database function
-        insert_sql(q, a, url)
+        # insert_sql(q, a, url)
 
+        # adds parsed elements to dict
+        parsed_info.append({'q': q, "a": a, "url": url})
+
+    return parsed_info
 
     f.close()
 
-# define sqlite population function (move to separate doc later)
+# sqlite function that takes 4 arguments of a database name question,
+# answer and url and adds them to a sqlite table, if the
+# table doesn;t exist it is created
 
-def insert_sql(q, a, url):
+def insert_sql(db, q, a, url):
+
+    # connect to database and insert arguments
+    conn = sqlite3.connect(db)
+    c = conn.cursor()
+
+    c.execute('''CREATE TABLE IF NOT EXISTS questions (id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT, answer TEXT, url TEXT)''')
+
     c.execute('INSERT INTO questions (question, answer, url) VALUES (?, ?, ?)', (q, a, url))
     conn.commit()
 
-# connect to database and create table
-conn = sqlite3.connect('triviaplaying.sqlite')
-c = conn.cursor()
-c.execute('''CREATE TABLE questions (id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT, answer TEXT, url TEXT)''')
-parse_text()
+    conn.close()
 
+example_dict = {'q': "question222", "a": "answer333", "url": "url333",}
+insert_sql("testdb.sqlite", example_dict['q'], example_dict['a'], example_dict['url'])
 
-# include insert statements here
-
-conn.close()
+# parse_text("triviaconverted.txt")
