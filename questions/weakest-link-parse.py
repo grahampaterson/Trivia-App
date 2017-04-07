@@ -1,5 +1,4 @@
-import os
-import sys
+from sqlitecreator import insert_sql
 
 def weakest_link_parse():
     f = open('weakest-link.txt', 'r')
@@ -15,7 +14,7 @@ def weakest_link_parse():
         q = line[0:end_question + 1]
         a = line[start_ans:end_ans]
         # print(q + ": " + a)
-        all_questions.append({"q": q, "a": a})
+        all_questions.append({"q": q, "a": a, "info": "weakestlink"})
 
     print(all_questions[1])
     print(all_questions[50])
@@ -24,4 +23,4 @@ def weakest_link_parse():
 
     return all_questions
 
-weakest_link_parse()
+insert_sql("testdb.sqlite", weakest_link_parse())

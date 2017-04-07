@@ -1,6 +1,7 @@
 import re
+from sqlitecreator import insert_sql
 
-# function takes and input file and an output file
+# function takes an input file and an output file
 # the function parses the urls at the beginning of a set of questions for a
 # date format using regex, if a date is found that information is prepended to
 # the beginning of the following questions until another url is found
@@ -42,5 +43,43 @@ def format_dates(inputfile, outputfile):
     outfile.close()
 
 
+# function to parse text file for qustion and answer combinations
+# questions are indicated by line starting with Q: and answers A:
+# urls contain the string .htm
+# returns a list of dicts containing above keys/values
+def parse_text(infile):
 
-format_dates("triviaconverted.txt", "triviadated.txt")
+    parsed_info = []
+
+    # open file
+    f = open(infile, "r")
+
+    url ="no url"
+
+    # loop through each line of file
+    for line in f:
+        q = ""
+        a = ""
+        if line[0:2] == "Q:":
+            q = line
+            nextline = f.readline()
+            if nextline[0:2] == "A:":
+                a = nextline
+            else:
+                continue
+        elif line.find(".htm") != -1:
+            url = line
+            continue
+        else:
+            # print("IGNORE " + line)
+            continue
+
+        # adds parsed elements to dict
+        parsed_info.append({'q': q, "a": a, "info": url})
+
+    return parsed_info
+
+    f.close()
+
+insert_sql("testdb.sqlite", parse_text("triviadated.txt"))
+# parse_text("triviaconverted.txt")
