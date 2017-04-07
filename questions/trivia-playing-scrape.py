@@ -74,12 +74,9 @@ def parse_questions(url):
 sample = [{"q": "question", "a": "answer"}]
 
 
-# takes a list of dicts with keys "q" and "a" and writes them to file quiz.txt
-def write_file(q_list, n, url):
-
-    # writes each quiz to new file
-    # filename = "triviaplaying/quiz" + str(n) + ".txt"
-    # f = open(filename, "w")
+# takes a list of dicts with keys "q", "a" and "url" and writes them to file
+# on separate lines
+def write_file(q_list, url):
 
     # writes every quiz to one file
     filename = "triviaplaying.txt"
@@ -98,7 +95,7 @@ num_of_pages = len(url_list)
 counter = 0
 for url in url_list[218:]:
     print(str(num_of_pages - counter) + " pages left to scrape")
-    write_file(parse_questions(url), counter, url)
+    write_file(parse_questions(url), url)
     counter += 1
     # if counter == 6:
     #     break

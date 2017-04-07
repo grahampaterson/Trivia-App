@@ -1,5 +1,10 @@
 import re
 
+# function takes and input file and an output file
+# the function parses the urls at the beginning of a set of questions for a
+# date format using regex, if a date is found that information is prepended to
+# the beginning of the following questions until another url is found
+# all data is written to output file
 def format_dates(inputfile, outputfile):
     infile = open(inputfile, "r")
     outfile = open(outputfile, "w")
@@ -32,7 +37,6 @@ def format_dates(inputfile, outputfile):
                 line = "Q: In " + date + " " + line[3:]
 
         outfile.write(line)
-
 
     infile.close()
     outfile.close()

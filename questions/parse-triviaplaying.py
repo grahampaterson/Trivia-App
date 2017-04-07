@@ -31,9 +31,6 @@ def parse_text(infile):
             # print("IGNORE " + line)
             continue
 
-        # add q, a and url to database function
-        # insert_sql(q, a, url)
-
         # adds parsed elements to dict
         parsed_info.append({'q': q, "a": a, "url": url})
 
@@ -43,9 +40,8 @@ def parse_text(infile):
 
 # sqlite function that takes 4 arguments of a database name question,
 # answer and url and adds them to a sqlite table, if the
-# table doesn;t exist it is created
-
-def insert_sql(db, q, a, url):
+# table doesn't exist it is created
+def insert_sql(db, qaurl_list):
 
     # connect to database and insert arguments
     conn = sqlite3.connect(db)
@@ -53,12 +49,18 @@ def insert_sql(db, q, a, url):
 
     c.execute('''CREATE TABLE IF NOT EXISTS questions (id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT, answer TEXT, url TEXT)''')
 
-    c.execute('INSERT INTO questions (question, answer, url) VALUES (?, ?, ?)', (q, a, url))
-    conn.commit()
+    # iterate through list and add dicts to database
+    # TODO add error check for empty lists, incorrect data types etc...
+    for x in qaurl_list:
+        if len(x) == 3:
+            c.execute('INSERT INTO questions (question, answer, url) VALUES (?, ?, ?)', (x['q'], x['a'], x['url']))
+        elif len(x) == 2:
+            c.execute('INSERT INTO questions (question, answer) VALUES (?, ?)', (x['q'], x['a']))
 
+    conn.commit()
     conn.close()
 
-example_dict = {'q': "question222", "a": "answer333", "url": "url333",}
-insert_sql("testdb.sqlite", example_dict['q'], example_dict['a'], example_dict['url'])
+insert_sql("testdb.sqlite", parse_text("triviadated.txt"))
+
 
 # parse_text("triviaconverted.txt")
