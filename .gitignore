@@ -2,7 +2,5 @@
 questions/triviaplaying.txt
 
 /env
-
 scrapers/*.txt
-
-*.sqlite
+scraper/*.sqlite
