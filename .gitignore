@@ -3,6 +3,6 @@ questions/triviaplaying.txt
 
 /env
 
-*.txt
+scrapers/*.txt
 
 *.sqlite
