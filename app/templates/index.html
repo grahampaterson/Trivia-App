@@ -1,8 +1,14 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>Hello World</h1>
+<h1>Q + A</h1>
+<table class=table>
 {% for question in questions %}
-{{ question['q'] + question['a'] }}
+  <tr>
+    <td>{{ question['id'] }}</td>
+    <td>{{ question['q'] }}</td>
+    <td>{{ question['a'] }}</td>
+  </tr>
 {% endfor %}
+</table>
 
 {% endblock %}

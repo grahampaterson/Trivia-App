@@ -23,9 +23,11 @@ def hello_world():
     # get 10 random numbers from the length of the database
     db_length = Question.query.count()
 
+    # iterate over random numbers and get corrosponding row from database
     questions = []
     for x in random.sample(range(db_length), 20):
+        # TODO add error handling for if row doesn't exist
         row = Question.query.get(x)
-        questions.append({"q": row.question, "a": row.answer,})
+        questions.append({"id": row.id, "q": row.question, "a": row.answer,})
 
     return render_template("index.html", questions=questions)
