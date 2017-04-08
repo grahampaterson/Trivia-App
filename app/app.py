@@ -20,7 +20,12 @@ class Question(db.Model):
 
 @app.route('/')
 def hello_world():
-    questions = Question.query.limit(10).all()
-    for row in questions:
-        print(row.question)
-    return render_template("index.html")
+    # get 10 random numbers from the length of the database
+    db_length = Question.query.count()
+
+    questions = []
+    for x in random.sample(range(db_length), 20):
+        row = Question.query.get(x)
+        questions.append({"q": row.question, "a": row.answer,})
+
+    return render_template("index.html", questions=questions)
