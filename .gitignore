@@ -1,6 +1,8 @@
 
 questions/triviaplaying.txt
 
+/env
+
 *.txt
 
 *.sqlite
