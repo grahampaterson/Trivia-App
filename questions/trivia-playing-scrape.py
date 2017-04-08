@@ -105,12 +105,12 @@ def write_file(q_list, url):
 
 # "main" function
 # start_time = time.time()
-# url_list = scrape_urls()
+url_list = scrape_urls()
 # num_of_pages = len(url_list)
 # counter = 0
-# for url in url_list[218:]:
+for url in url_list:
 #     print(str(num_of_pages - counter) + " pages left to scrape")
-#     write_file(parse_questions(url), url)
+    write_file(parse_questions(url), url)
 #     counter += 1
 #     # if counter == 6:
 #     #     break
