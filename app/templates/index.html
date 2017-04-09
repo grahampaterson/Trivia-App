@@ -16,8 +16,9 @@
 </table> -->
 {% for question in questions %}
 <div id="{{ question['id'] }}" class="question-container">
-  <div class="que">{{ question['q'] }} <a>report</a></div>
+  <div class="que">{{ question['q'] }}</div>
   <div class="ans">{{ question['a'] }}</div>
+  <div class="report">report</div>
 </div>
 {% endfor %}
 <button class="btn btn-default">Show Answers</button>

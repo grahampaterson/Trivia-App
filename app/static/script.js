@@ -1,21 +1,28 @@
 $(document).ready(function() {
+
+  // button function to show all answer
   $('button').click(function() {
-    $('.ans').toggle();
+    $('.ans').show();
   });
 
-  console.log("working")
-
-  $('a').click(function(){
+  // report button sends question-id to server
+  $('.report').click(function(){
     $.getJSON('/ajax_test', {
       id: $(this).closest('.question-container').attr('id')
     }, function() {
 
     });
-    $(this).parent().append('<span>reported</span>');
+    $(this).parent().append('<div>reported</div>');
     $(this).hide();
-    console.log($(this).closest('.question-container').attr('id'))
+    console.log($(this).closest('.question-container').attr('id'));
   })
 
+  // on clicking a single question show the answer
+  $('.que').click(function() {
+    $(this).closest('.question-container').find('.ans').toggle();
+  })
+
+  // test ajax just makes a request to ajax test page and returns some data
   $.getJSON('/ajax_test', function(data) {
     console.log(data.something);
   });

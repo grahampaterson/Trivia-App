@@ -35,5 +35,6 @@ def index():
 @app.route('/ajax_test')
 def ajax_test():
     id = request.args.get('id', 'default')
+    # TODO add functionailty to add reports to database
     print(id)
     return jsonify(something="whatever")
