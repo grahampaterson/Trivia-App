@@ -1,25 +1,20 @@
 {% extends "layout.html" %}
+<!-- Content Block -->
 {% block content %}
 <h1>Q + A</h1>
 <table id="qlist" class=table>
   <tr>
     <th>Question</th>
-    <th>Answer</th>
+    <th class="ans">Answer</th>
   </tr>
 {% for question in questions %}
   <tr id="{{ question['id'] }}">
-    <td>{{ question['q'] }}</td>
-    <td>{{ question['a'] }}</td>
+    <td class="que">{{ question['q'] }}</td>
+    <td class="ans">{{ question['a'] }}</td>
   </tr>
 {% endfor %}
 </table>
 <button class="btn btn-default">Show Answers</button>
-
-<script>
-$('#qlist').function(){
-  print(this)
-}
-
-</script>
-
 {% endblock %}
+
+<!-- Scripts block -->
