@@ -2,18 +2,24 @@
 <!-- Content Block -->
 {% block content %}
 <h1>Q + A</h1>
-<table id="qlist" class=table>
+<!-- <table id="qlist" class=table>
   <tr>
     <th>Question</th>
     <th class="ans">Answer</th>
   </tr>
 {% for question in questions %}
   <tr id="{{ question['id'] }}">
-    <td class="que">{{ question['q'] }}</td>
+    <td class="que">{{ question['q'] }} <a>report</a></td>
     <td class="ans">{{ question['a'] }}</td>
   </tr>
 {% endfor %}
-</table>
+</table> -->
+{% for question in questions %}
+<div id="{{ question['id'] }}" class="question-container">
+  <div class="que">{{ question['q'] }} <a>report</a></div>
+  <div class="ans">{{ question['a'] }}</div>
+</div>
+{% endfor %}
 <button class="btn btn-default">Show Answers</button>
 {% endblock %}
 

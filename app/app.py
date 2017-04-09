@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 import os
 import random
@@ -19,7 +19,7 @@ class Question(db.Model):
         self.answer = answer
 
 @app.route('/')
-def hello_world():
+def index():
     # get 10 random numbers from the length of the database
     db_length = Question.query.count()
 
@@ -31,3 +31,9 @@ def hello_world():
         questions.append({"id": row.id, "q": row.question, "a": row.answer,})
 
     return render_template("index.html", questions=questions)
+
+@app.route('/ajax_test')
+def ajax_test():
+    id = request.args.get('id', 'default')
+    print(id)
+    return jsonify(something="whatever")
