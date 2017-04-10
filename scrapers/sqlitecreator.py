@@ -1,7 +1,7 @@
 import sqlite3
 
-# sqlite function that takes 2 arguments of a database name question,
-# answer and url and adds them to a sqlite table, if the
+# sqlite function that takes 2 arguments of a database name,
+# and a list of dicts with keys "q", "a", "info" inserted into a sqlite table, if the
 # table doesn't exist it is created
 def insert_sql(db, qainfo_list):
 

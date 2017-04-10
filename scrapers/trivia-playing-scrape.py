@@ -24,8 +24,8 @@ def scrape_urls():
     return urls
 
 
-# tags a single URL as an argument and scrapes that url for all p tags contents
-# all p tags are then parsed for questions and answers and add as a dict to a
+# takes a single URL as an argument and scrapes that url for all p tags contents
+# all p tags are then parsed for questions and answers and added as a dict to a
 # list and then returned
 def parse_questions(url):
 
@@ -73,6 +73,8 @@ def parse_questions(url):
         p_text = line.get_text()
         if p_text.find("A:") == -1:
             continue
+        elif p_text.find("{") != -1:
+            continue
         else:
             p_text = p_text.replace("\n", "")
             p_text = p_text.replace("\r", "")
@@ -81,8 +83,8 @@ def parse_questions(url):
             q = p_text[:answer]
             a = p_text[answer:]
 
-            print(q)
-            print(a)
+            # print(q)
+            # print(a)
 
         all_questions.append({"q": q, "a": a})
 
@@ -104,17 +106,17 @@ def write_file(q_list, url):
     f.close
 
 # "main" function
-# start_time = time.time()
+start_time = time.time()
 url_list = scrape_urls()
 # num_of_pages = len(url_list)
-# counter = 0
+counter = 0
 for url in url_list:
 #     print(str(num_of_pages - counter) + " pages left to scrape")
     write_file(parse_questions(url), url)
-#     counter += 1
-#     # if counter == 6:
-#     #     break
+    counter += 1
+    print("Total time elapsed " + str(time.time() - start_time))
+    if counter == 20:
+        break
 #     pause = random.randrange(5, 30)
 #     print("Pausing for " + str(pause) + " seconds")
 #     time.sleep(pause)
-#     print("Total time elapsed " + str(time.time() - start_time))
