@@ -36,17 +36,20 @@ def index():
     return render_template("index.html", questions=questions)
 
 @app.route('/report')
-def ajax_test():
+def report():
     # if the server receives an ID as a get request the question is reported
     # and changed to status "1" for reported
     id = request.args.get('id', 'default')
     if id == "default":
-        print(id)
+        return jsonify(nothing="nothing")
     else:
         Question.query.filter_by(id=id).first().status_id = 1
         db.session.commit()
+        new_q = random.choice(Question.query.filter_by(status_id='0').all())
+        replacement = {'q': new_q.question, 'a': new_q.answer}
+        print(new_q.question)
         print(id)
 
     # TODO remove reported question from database
     # TODO return a new question to replace reported question
-    return jsonify(something="whatever")
+    return jsonify(newq=replacement)

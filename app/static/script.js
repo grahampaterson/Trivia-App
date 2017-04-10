@@ -6,14 +6,16 @@ $(document).ready(function() {
   });
 
   // report button sends question-id to server
+  // and gets back a new question which is appended
+  // TODO replace click function with on click function
   $('.report').click(function(){
     $.getJSON('/report', {
       id: $(this).closest('.question-container').attr('id')
-    }, function() {
-
+    }, function(data) {
+      console.log(data)
+      $('.page-content').append('<div class="question-container"><div class="que">' + data.newq.q + '</div><div class="ans">' + data.newq.a + '</div><div class="report">report</div></div>')
     });
-    $(this).parent().append('<div>reported</div>');
-    $(this).hide();
+    $(this).closest('.question-container').fadeOut();
     console.log($(this).closest('.question-container').attr('id'));
   })
 
@@ -22,8 +24,8 @@ $(document).ready(function() {
     $(this).closest('.question-container').find('.ans').toggle();
   })
 
-  // test ajax just makes a request to ajax test page and returns some data
+  // test ajax just makes a request to report page and returns some data that says nothing
   $.getJSON('/report', function(data) {
-    console.log(data.something);
+    console.log(data.nothing);
   });
 });
