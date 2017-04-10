@@ -4,3 +4,5 @@ questions/triviaplaying.txt
 /env
 scrapers/*.txt
 scraper/*.sqlite
+
+app/phpliteadmin.php

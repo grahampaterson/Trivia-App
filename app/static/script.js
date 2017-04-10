@@ -7,7 +7,7 @@ $(document).ready(function() {
 
   // report button sends question-id to server
   $('.report').click(function(){
-    $.getJSON('/ajax_test', {
+    $.getJSON('/report', {
       id: $(this).closest('.question-container').attr('id')
     }, function() {
 
@@ -23,7 +23,7 @@ $(document).ready(function() {
   })
 
   // test ajax just makes a request to ajax test page and returns some data
-  $.getJSON('/ajax_test', function(data) {
+  $.getJSON('/report', function(data) {
     console.log(data.something);
   });
 });
