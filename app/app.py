@@ -38,7 +38,7 @@ def index():
 @app.route('/report')
 def ajax_test():
     # if the server receives an ID as a get request the question is reported
-    # and changed to review status "1"
+    # and changed to status "1" for reported
     id = request.args.get('id', 'default')
     if id == "default":
         print(id)
@@ -46,7 +46,7 @@ def ajax_test():
         Question.query.filter_by(id=id).first().status_id = 1
         db.session.commit()
         print(id)
-    # TODO add functionailty to add reports to database
-    # TODO return a new question to replace reported question
+
     # TODO remove reported question from database
+    # TODO return a new question to replace reported question
     return jsonify(something="whatever")
