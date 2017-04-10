@@ -36,5 +36,7 @@ def index():
 def ajax_test():
     id = request.args.get('id', 'default')
     # TODO add functionailty to add reports to database
+    # TODO return a new question to replace reported question
+    # TODO remove reported question from database
     print(id)
     return jsonify(something="whatever")
