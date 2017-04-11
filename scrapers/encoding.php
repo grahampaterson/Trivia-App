@@ -1,3 +1,6 @@
+<!-- This tool simply takes a file and translates it to ASCII removing all special
+chanaracter -->
+<!-- TODO Add functionailty to choose input/output files via CLI -->
 <?php
 
 $input = fopen("triviaplaying.txt", "r");
@@ -12,7 +15,7 @@ if ($input) {
     fclose($input);
 } else {
     // error opening the file.
-} 
+}
 
 fclose($output)
 

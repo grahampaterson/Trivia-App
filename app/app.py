@@ -43,13 +43,12 @@ def report():
     if id == "default":
         return jsonify(nothing="nothing")
     else:
+        # change old question status
         Question.query.filter_by(id=id).first().status_id = 1
         db.session.commit()
+        # get a new question from the database
         new_q = random.choice(Question.query.filter_by(status_id='0').all())
-        replacement = {'q': new_q.question, 'a': new_q.answer}
-        print(new_q.question)
+        replacement = {'id': new_q.id, 'q': new_q.question, 'a': new_q.answer}
         print(id)
 
-    # TODO remove reported question from database
-    # TODO return a new question to replace reported question
     return jsonify(newq=replacement)
