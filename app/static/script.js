@@ -11,7 +11,6 @@ $(document).ready(function() {
     $.getJSON('/report', {
       id: $(this).closest('.question-container').attr('id')
     }, function(data) {
-      // $('button').before('<div id="' + data.newq.id + '" class="question-container"><div class="que">' + data.newq.q + '</div><div class="ans">' + data.newq.a + '</div><div class="report">report</div></div>');
       $('button').before(([
         '<div id="' + data.newq.id + '" class="question-container">',
           '<div class="que">' + data.newq.q + '</div>',
