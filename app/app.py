@@ -47,6 +47,7 @@ def report():
         Question.query.filter_by(id=id).first().status_id = 1
         db.session.commit()
         # get a new question from the database
+        # TODO getting random question needs to be optimised
         new_q = random.choice(Question.query.filter_by(status_id='0').all())
         replacement = {'id': new_q.id, 'q': new_q.question, 'a': new_q.answer}
         print(id)
