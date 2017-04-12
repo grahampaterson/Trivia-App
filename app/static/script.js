@@ -1,8 +1,8 @@
 $(document).ready(function() {
 
   // button function to show all answer
-  $('button').click(function() {
-    $('.ans').show();
+  $('.primary-btn').click(function() {
+    $('.ans').fadeIn();
   });
 
   // report button sends question-id to server
@@ -16,6 +16,7 @@ $(document).ready(function() {
           '<div class="que">' + data.newq.q + '</div>',
           '<div class="ans">' + data.newq.a + '</div>',
           '<div class="report">report</div>',
+          '<div class="divider"></div>',
         '</div>'
       ]).join('\n'))
     });
