@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 import random
 
+# test
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///triviadb.sqlite'
 db = SQLAlchemy(app)
